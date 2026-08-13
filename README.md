@@ -14,13 +14,14 @@
 
 The objective of this project is to build, evaluate, compare, and deploy multiple machine learning classification models on a public dataset. The selected problem is to classify a breast-mass record as **Benign (0)** or **Malignant (1)** using numerical characteristics calculated from digitized images of fine-needle aspirate samples.
 
-Five classification algorithms prescribed in the assignment are implemented on the same training and test partitions:
+Six classification algorithms are implemented on the same training and test partitions:
 
 1. Logistic Regression
 2. Decision Tree Classifier
 3. K-Nearest Neighbour Classifier
-4. Gaussian Naive Bayes Classifier
-5. Random Forest Classifier (Ensemble)
+4. Naive Bayes Classifier (Gaussian)
+5. Naive Bayes Classifier (Multinomial)
+6. Random Forest Classifier (Ensemble)
 
 Each model is evaluated using all six required metrics: **Accuracy, AUC, Precision, Recall, F1 Score, and Matthews Correlation Coefficient (MCC)**. The trained models are integrated into a customized Streamlit application that supports CSV upload, model selection, evaluation, confusion-matrix display, classification-report display, prediction output, and downloadable results.
 
@@ -85,7 +86,7 @@ This makes malignant cases the positive class for Precision, Recall, F1, and ROC
 
 ## d. Models Used and Evaluation Results
 
-All models were trained on the same 455 training rows and evaluated on the same 114 supplied test rows. Standardization is included inside the model pipeline for Logistic Regression, kNN, and Gaussian Naive Bayes. Decision Tree and Random Forest operate on the original feature scale.
+All models were trained on the same 455 training rows and evaluated on the same 114 supplied test rows. Standardization is included inside the model pipeline for Logistic Regression, kNN, and Gaussian Naive Bayes. Multinomial Naive Bayes uses MinMaxScaler to ensure non-negative inputs. Decision Tree and Random Forest operate on the original feature scale.
 
 ### Model Configuration
 
@@ -94,7 +95,8 @@ All models were trained on the same 455 training rows and evaluated on the same 
 | Logistic Regression | `StandardScaler` + `LogisticRegression(max_iter=5000, random_state=42)` |
 | Decision Tree | `max_depth=5`, `min_samples_leaf=2`, `random_state=42` |
 | kNN | `StandardScaler` + `KNeighborsClassifier(n_neighbors=7, weights='distance')` |
-| Naive Bayes | `StandardScaler` + `GaussianNB()` |
+| Naive Bayes (Gaussian) | `StandardScaler` + `GaussianNB()` |
+| Naive Bayes (Multinomial) | `MinMaxScaler` + `MultinomialNB()` |
 | Random Forest (Ensemble) | 300 trees, balanced class weights, `random_state=42` |
 
 ### Comparison Table
@@ -104,7 +106,8 @@ All models were trained on the same 455 training rows and evaluated on the same 
 | Logistic Regression | 0.9561 | **0.9970** | **1.0000** | 0.8810 | 0.9367 | 0.9076 |
 | Decision Tree | 0.8947 | 0.8545 | 0.8947 | 0.8095 | 0.8500 | 0.7715 |
 | kNN | 0.9386 | 0.9907 | 0.9730 | 0.8571 | 0.9114 | 0.8688 |
-| Naive Bayes | 0.9035 | 0.9854 | 0.9189 | 0.8095 | 0.8608 | 0.7911 |
+| Naive Bayes (Gaussian) | 0.9035 | 0.9854 | 0.9189 | 0.8095 | 0.8608 | 0.7911 |
+| Naive Bayes (Multinomial) | 0.8421 | 0.9259 | **1.0000** | 0.5714 | 0.7273 | 0.6761 |
 | Random Forest (Ensemble) | **0.9649** | 0.9955 | 0.9750 | **0.9286** | **0.9512** | **0.9245** |
 
 ### Confusion-Matrix Summary
@@ -121,7 +124,8 @@ The matrix convention is:
 | Logistic Regression | `[[72, 0], [5, 37]]` | 5 |
 | Decision Tree | `[[68, 4], [8, 34]]` | 12 |
 | kNN | `[[71, 1], [6, 36]]` | 7 |
-| Naive Bayes | `[[69, 3], [8, 34]]` | 11 |
+| Naive Bayes (Gaussian) | `[[69, 3], [8, 34]]` | 11 |
+| Naive Bayes (Multinomial) | `[[72, 0], [18, 24]]` | 18 |
 | Random Forest (Ensemble) | `[[71, 1], [3, 39]]` | 4 |
 
 ---
