@@ -232,27 +232,22 @@ CUSTOM_CSS = """
         border-color: var(--line) !important;
     }
 
-    /* ── Pills / model selector buttons ── */
-    [data-testid="stPills"] button,
-    [data-baseweb="button-group"] button {
-        color: var(--ink) !important;
-        background: white !important;
-        border: 1.5px solid var(--line) !important;
-        border-radius: 999px !important;
+    /* ── Checkboxes (model selector) ── */
+    [data-testid="stCheckbox"] {
+        background: white;
+        border: 1.5px solid var(--line);
+        border-radius: 10px;
+        padding: 0.5rem 0.7rem;
+    }
+
+    [data-testid="stCheckbox"]:has(input:checked) {
+        background: #d4efdf !important;
+        border-color: #1e8449 !important;
+    }
+
+    [data-testid="stCheckbox"] label {
         font-weight: 600 !important;
-        padding: 0.3rem 0.9rem !important;
-    }
-
-    [data-testid="stPills"] button[aria-pressed="true"],
-    [data-baseweb="button-group"] button[aria-pressed="true"] {
-        color: white !important;
-        background: var(--blue) !important;
-        border-color: var(--blue) !important;
-    }
-
-    [data-testid="stPills"] button:hover {
-        border-color: var(--blue) !important;
-        color: var(--blue) !important;
+        font-size: 0.88rem !important;
     }
 
     /* ── Static pills (info tags) ── */
@@ -677,14 +672,12 @@ with upload_tab:
     }
 
     st.markdown("#### Select classification model(s)")
-    selected_model_names = st.pills(
-        "Model",
-        options=MODEL_ORDER,
-        format_func=lambda x: MODEL_LABELS[x],
-        default=MODEL_ORDER,
-        selection_mode="multi",
-        label_visibility="collapsed",
-    )
+    check_cols = st.columns(len(MODEL_ORDER))
+    selected_model_names = [
+        name
+        for name, col in zip(MODEL_ORDER, check_cols)
+        if col.checkbox(MODEL_LABELS[name], value=True, key=f"chk_{name}")
+    ]
     if not selected_model_names:
         selected_model_names = MODEL_ORDER
 
