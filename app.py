@@ -589,6 +589,16 @@ summary_columns[3].markdown(
     unsafe_allow_html=True,
 )
 
+# Display labels shared across both tabs
+MODEL_LABELS_GLOBAL = {
+    "Logistic Regression": "Logistic Regression",
+    "Decision Tree": "Decision Tree Classifier",
+    "kNN": "K-Nearest Neighbor Classifier",
+    "Naive Bayes": "Naive Bayes Classifier (Gaussian)",
+    "Naive Bayes (Multinomial)": "Naive Bayes Classifier (Multinomial)",
+    "Random Forest (Ensemble)": "Ensemble Model - Random Forest",
+}
+
 upload_tab, overview_tab = st.tabs(
     ["Upload & Evaluate", "Model Comparison"]
 )
@@ -601,6 +611,9 @@ with overview_tab:
     )
 
     display_comparison = comparison.copy()
+    display_comparison["ML Model Name"] = display_comparison["ML Model Name"].map(
+        lambda x: MODEL_LABELS_GLOBAL.get(x, x)
+    )
     for metric in METRIC_COLUMNS:
         display_comparison[metric] = display_comparison[metric].round(4)
     st.dataframe(display_comparison, use_container_width=True, hide_index=True)
@@ -626,14 +639,21 @@ with overview_tab:
             "Produced a strong AUC despite its conditional-independence assumption, but correlated "
             "cell-nucleus measurements reduced its classification accuracy and recall."
         ),
+        "Naive Bayes (Multinomial)": (
+            "Achieved perfect precision (1.0000) with zero false positives, but missed nearly half "
+            "the malignant cases (recall 0.5714). Uses MinMaxScaler to keep features non-negative. "
+            "Lower MCC and F1 than Gaussian NB confirm that count-based assumptions are less suitable "
+            "for continuous cell-nucleus measurements."
+        ),
         "Random Forest (Ensemble)": (
             "Best overall balance: highest accuracy, recall, F1 and MCC, with only one false positive "
             "and three false negatives."
         ),
     }
     for model_name, observation in observation_cards.items():
+        display = MODEL_LABELS_GLOBAL.get(model_name, model_name)
         st.markdown(
-            f"<div class='info-card'><strong>{model_name}</strong><br>{observation}</div><br>",
+            f"<div class='info-card'><strong>{display}</strong><br>{observation}</div><br>",
             unsafe_allow_html=True,
         )
 
@@ -641,11 +661,12 @@ with overview_tab:
     winner_full = comparison.sort_values(
         by=["MCC", "F1", "AUC", "Accuracy"], ascending=False
     ).iloc[0]["ML Model Name"]
+    winner_display = MODEL_LABELS_GLOBAL.get(winner_full, winner_full)
     st.divider()
     st.markdown(
         f"""
         <div class="winner-card">
-            <strong>Overall Best Performing Model: {winner_full}</strong><br>
+            <strong>Overall Best Performing Model: {winner_display}</strong><br>
             Selected using highest MCC, then F1, AUC, and Accuracy as tie-breakers.
         </div>
         """,
@@ -664,14 +685,7 @@ with upload_tab:
         "Naive Bayes (Multinomial)",
         "Random Forest (Ensemble)",
     ]
-    MODEL_LABELS = {
-        "Logistic Regression": "Logistic Regression",
-        "Decision Tree": "Decision Tree Classifier",
-        "kNN": "K-Nearest Neighbor Classifier",
-        "Naive Bayes": "Naive Bayes Classifier (Gaussian)",
-        "Naive Bayes (Multinomial)": "Naive Bayes Classifier (Multinomial)",
-        "Random Forest (Ensemble)": "Ensemble Model - Random Forest",
-    }
+    MODEL_LABELS = MODEL_LABELS_GLOBAL
 
     st.markdown("#### Select classification model(s)")
     check_cols = st.columns(len(MODEL_ORDER))
@@ -728,7 +742,7 @@ with upload_tab:
 
             for selected_model_name in selected_model_names:
                 st.divider()
-                st.markdown(f"### {selected_model_name}")
+                st.markdown(f"### {MODEL_LABELS.get(selected_model_name, selected_model_name)}")
 
                 selected_model = models[selected_model_name]
                 predictions = selected_model.predict(features).astype(int)
