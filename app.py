@@ -661,13 +661,15 @@ with upload_tab:
         "Decision Tree",
         "kNN",
         "Naive Bayes",
+        "Naive Bayes (Multinomial)",
         "Random Forest (Ensemble)",
     ]
     MODEL_LABELS = {
         "Logistic Regression": "Logistic Regression",
         "Decision Tree": "Decision Tree Classifier",
         "kNN": "K-Nearest Neighbor Classifier",
-        "Naive Bayes": "Naive Bayes Classifier",
+        "Naive Bayes": "Naive Bayes Classifier (Gaussian)",
+        "Naive Bayes (Multinomial)": "Naive Bayes Classifier (Multinomial)",
         "Random Forest (Ensemble)": "Ensemble Model - Random Forest",
     }
 

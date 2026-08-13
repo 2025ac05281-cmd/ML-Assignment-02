@@ -136,9 +136,10 @@
     "Decision Tree": "decision_tree.joblib",
     "kNN": "knn.joblib",
     "Naive Bayes": "naive_bayes.joblib",
+    "Naive Bayes (Multinomial)": "naive_bayes_multinomial.joblib",
     "Random Forest (Ensemble)": "random_forest_ensemble.joblib"
   },
-  "generated_at_utc": "2026-08-13T17:30:56.825086+00:00",
+  "generated_at_utc": "2026-08-13T20:16:50.020014+00:00",
   "software_versions": {
     "python": "3.13.3",
     "numpy": "2.3.5",

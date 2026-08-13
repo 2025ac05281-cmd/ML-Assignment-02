@@ -42,10 +42,10 @@ from sklearn.metrics import (
     roc_auc_score,
     roc_curve,
 )
-from sklearn.naive_bayes import GaussianNB
+from sklearn.naive_bayes import GaussianNB, MultinomialNB
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.tree import DecisionTreeClassifier
 
 RANDOM_STATE = 42
@@ -250,6 +250,12 @@ def build_models() -> dict[str, Any]:
             steps=[
                 ("scaler", StandardScaler()),
                 ("classifier", GaussianNB()),
+            ]
+        ),
+        "Naive Bayes (Multinomial)": Pipeline(
+            steps=[
+                ("scaler", MinMaxScaler()),
+                ("classifier", MultinomialNB()),
             ]
         ),
         "Random Forest (Ensemble)": RandomForestClassifier(
