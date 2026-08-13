@@ -511,8 +511,8 @@ with upload_tab:
     )
 
     use_supplied = st.checkbox(
-        "Or use the included test_data.csv (114 labelled rows)",
-        value=False,
+        "Use the included test_data.csv (114 labelled rows)",
+        value=True,
     )
 
     input_frame: pd.DataFrame | None = None
