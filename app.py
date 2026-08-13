@@ -451,9 +451,10 @@ def prediction_table(
 
 
 def render_metric_cards(metrics: dict[str, float]) -> None:
-    columns = st.columns(6)
-    for column, metric_name in zip(columns, METRIC_COLUMNS):
-        column.metric(metric_name, f"{metrics[metric_name]:.4f}")
+    row1 = st.columns(3)
+    row2 = st.columns(3)
+    for col, metric_name in zip(row1 + row2, METRIC_COLUMNS):
+        col.metric(metric_name, f"{metrics[metric_name]:.4f}")
 
 
 def render_confusion_matrix(
