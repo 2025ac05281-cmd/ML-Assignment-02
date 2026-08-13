@@ -54,16 +54,14 @@ CUSTOM_CSS = """
         --soft-blue: #eef4ff;
         --teal: #168a88;
         --ink: #1d2733;
-        --muted: #667085;
+        --muted: #555f6d;
         --line: #dfe5ec;
         --surface: #ffffff;
     }
 
+    /* ── Global text reset handled by config.toml theme ── */
     .stApp {
-        background:
-            radial-gradient(circle at 92% 2%, rgba(47,111,237,0.09), transparent 27rem),
-            linear-gradient(180deg, #f7f9fc 0%, #ffffff 28rem);
-        color: var(--ink);
+        background: #f7f9fc;
     }
 
     .block-container {
@@ -72,111 +70,272 @@ CUSTOM_CSS = """
         padding-bottom: 3rem;
     }
 
+    /* ── Headings ── */
+    h1, h2, h3, h4, h5, h6,
+    .stMarkdown h1, .stMarkdown h2,
+    .stMarkdown h3, .stMarkdown h4 {
+        color: var(--navy) !important;
+        font-weight: 700;
+    }
+
+    /* ── Body text and captions ── */
+    p, li, span, label, div {
+        color: var(--ink);
+    }
+
+    .stCaption, [data-testid="stCaptionContainer"] {
+        color: var(--muted) !important;
+    }
+
+    /* ── Hero banner ── */
     .hero {
         background: linear-gradient(125deg, #132238 0%, #244a76 62%, #168a88 125%);
-        border-radius: 22px;
-        padding: 2rem 2.2rem;
+        border-radius: 18px;
+        padding: 1.8rem 2rem;
         color: white;
-        box-shadow: 0 18px 42px rgba(19,34,56,0.18);
+        box-shadow: 0 12px 32px rgba(19,34,56,0.15);
         margin-bottom: 1.4rem;
+    }
+
+    .hero *, .hero p, .hero h1, .hero-kicker {
+        color: white !important;
     }
 
     .hero-kicker {
         font-size: 0.78rem;
-        letter-spacing: 0.13em;
+        letter-spacing: 0.12em;
         text-transform: uppercase;
-        opacity: 0.82;
+        opacity: 0.88;
         font-weight: 700;
     }
 
     .hero h1 {
-        margin: 0.3rem 0 0.45rem 0;
-        font-size: 2.35rem;
-        line-height: 1.12;
-        color: white;
+        margin: 0.3rem 0 0.4rem 0;
+        font-size: 2.1rem;
+        line-height: 1.15;
     }
 
     .hero p {
         margin: 0;
-        max-width: 900px;
-        font-size: 1.02rem;
-        opacity: 0.93;
+        font-size: 1rem;
+        opacity: 0.95;
         line-height: 1.55;
     }
 
+    /* ── Cards ── */
     .info-card {
-        background: var(--surface);
+        background: white;
         border: 1px solid var(--line);
-        border-radius: 16px;
-        padding: 1.05rem 1.15rem;
-        box-shadow: 0 8px 24px rgba(27,39,51,0.06);
+        border-radius: 14px;
+        padding: 1rem 1.1rem;
+        box-shadow: 0 4px 14px rgba(27,39,51,0.05);
         height: 100%;
+        color: var(--ink) !important;
     }
 
-    .info-card strong {
-        color: var(--navy);
-    }
-
-    .pill {
-        display: inline-block;
-        background: var(--soft-blue);
-        color: #214eab;
-        border: 1px solid #cadbff;
-        border-radius: 999px;
-        padding: 0.28rem 0.65rem;
-        margin: 0.15rem 0.24rem 0.15rem 0;
-        font-size: 0.82rem;
-        font-weight: 650;
-    }
+    .info-card strong { color: var(--navy) !important; }
 
     .winner-card {
         background: linear-gradient(135deg, #ecfff9, #eff6ff);
         border: 1px solid #a9ded5;
         border-left: 5px solid var(--teal);
-        border-radius: 15px;
-        padding: 1rem 1.15rem;
-        margin: 0.6rem 0 1.2rem 0;
+        border-radius: 14px;
+        padding: 0.9rem 1.1rem;
+        margin: 0.8rem 0 1.2rem 0;
+        color: var(--ink) !important;
     }
+
+    .winner-card strong { color: var(--navy) !important; }
 
     .upload-note {
         background: #fffaf0;
         border: 1px solid #f3d9a7;
-        border-radius: 12px;
-        padding: 0.8rem 1rem;
-        color: #684f1b;
+        border-radius: 10px;
+        padding: 0.75rem 1rem;
+        color: #5a4010 !important;
         margin-bottom: 0.9rem;
     }
 
-    .medical-note {
-        background: #fff4f4;
-        border: 1px solid #f1c3c3;
-        border-radius: 12px;
-        padding: 0.75rem 0.95rem;
-        color: #7b2929;
-        font-size: 0.9rem;
-    }
-
+    /* ── Metrics ── */
     [data-testid="stMetric"] {
         background: white;
         border: 1px solid var(--line);
         padding: 0.85rem;
-        border-radius: 14px;
-        box-shadow: 0 5px 16px rgba(27,39,51,0.05);
+        border-radius: 12px;
+        box-shadow: 0 3px 12px rgba(27,39,51,0.05);
     }
 
+    [data-testid="stMetricLabel"] > div,
+    [data-testid="stMetricValue"] > div {
+        color: var(--ink) !important;
+    }
+
+    /* ── Tabs ── */
+    [data-baseweb="tab-list"] {
+        background: transparent !important;
+        gap: 4px;
+    }
+
+    [data-baseweb="tab"],
+    button[data-baseweb="tab"],
+    [role="tab"] {
+        color: #374151 !important;
+        font-weight: 600 !important;
+        font-size: 0.95rem !important;
+        opacity: 1 !important;
+        background: transparent !important;
+    }
+
+    [data-baseweb="tab"]:hover,
+    button[data-baseweb="tab"]:hover {
+        color: var(--blue) !important;
+        background: #eef4ff !important;
+        border-radius: 6px 6px 0 0;
+    }
+
+    [data-baseweb="tab"][aria-selected="true"],
+    button[data-baseweb="tab"][aria-selected="true"],
+    [role="tab"][aria-selected="true"] {
+        color: var(--blue) !important;
+        border-bottom-color: var(--blue) !important;
+    }
+
+    /* ── Sidebar ── */
     [data-testid="stSidebar"] {
         background: #f1f5fb;
         border-right: 1px solid #dce4ee;
     }
 
+    [data-testid="stSidebar"] * {
+        color: var(--ink) !important;
+    }
+
+    /* ── Inputs and dropdowns ── */
     div[data-baseweb="select"] > div,
     [data-testid="stFileUploaderDropzone"] {
-        border-radius: 12px;
+        border-radius: 10px;
+    }
+
+    div[data-baseweb="select"],
+    div[data-baseweb="select"] *,
+    div[data-baseweb="select"] input,
+    [data-testid="stSelectbox"] *,
+    [data-baseweb="popover"] *,
+    [data-baseweb="menu"] *,
+    [role="option"],
+    [role="listbox"] {
+        color: var(--ink) !important;
+        background-color: white !important;
+    }
+
+    div[data-baseweb="select"] > div {
+        border-color: var(--line) !important;
+    }
+
+    /* ── Pills / model selector buttons ── */
+    [data-testid="stPills"] button,
+    [data-baseweb="button-group"] button {
+        color: var(--ink) !important;
+        background: white !important;
+        border: 1.5px solid var(--line) !important;
+        border-radius: 999px !important;
+        font-weight: 600 !important;
+        padding: 0.3rem 0.9rem !important;
+    }
+
+    [data-testid="stPills"] button[aria-pressed="true"],
+    [data-baseweb="button-group"] button[aria-pressed="true"] {
+        color: white !important;
+        background: var(--blue) !important;
+        border-color: var(--blue) !important;
+    }
+
+    [data-testid="stPills"] button:hover {
+        border-color: var(--blue) !important;
+        color: var(--blue) !important;
+    }
+
+    /* ── Static pills (info tags) ── */
+        display: inline-block;
+        background: var(--soft-blue);
+        color: #214eab !important;
+        border: 1px solid #cadbff;
+        border-radius: 999px;
+        padding: 0.26rem 0.62rem;
+        margin: 0.12rem 0.2rem 0.12rem 0;
+        font-size: 0.82rem;
+        font-weight: 600;
     }
 
     .small-muted {
-        color: var(--muted);
+        color: var(--muted) !important;
         font-size: 0.86rem;
+    }
+
+    /* ── Inline code ── */
+    code, .stMarkdown code {
+        background: #eef4ff !important;
+        color: #1a4eb8 !important;
+        border-radius: 4px;
+        padding: 0.1em 0.35em;
+        font-size: 0.9em;
+    }
+
+    /* ── File uploader button ── */
+    [data-testid="stFileUploaderDropzone"] button,
+    [data-testid="stFileUploaderDropzoneInstructions"] button {
+        background-color: var(--blue) !important;
+        color: white !important;
+        border-radius: 8px !important;
+        font-weight: 600 !important;
+    }
+
+    [data-testid="stFileUploaderDropzone"] button *,
+    [data-testid="stFileUploaderDropzoneInstructions"] button * {
+        color: white !important;
+    }
+
+    /* ── Buttons ── */
+    .stDownloadButton > button,
+    .stButton > button {
+        background-color: var(--blue) !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 8px !important;
+        font-weight: 600 !important;
+    }
+
+    .stDownloadButton > button:hover,
+    .stButton > button:hover {
+        background-color: #1a56d6 !important;
+        color: white !important;
+    }
+
+    .stDownloadButton > button *,
+    .stButton > button * {
+        color: white !important;
+    }
+
+    /* ── Expander ── */
+    [data-testid="stExpander"],
+    details {
+        background: white !important;
+        border: 1px solid var(--line) !important;
+        border-radius: 10px !important;
+    }
+
+    [data-testid="stExpander"] summary,
+    details summary,
+    [data-testid="stExpander"] summary *,
+    details summary * {
+        color: var(--ink) !important;
+        font-weight: 600 !important;
+        background: transparent !important;
+    }
+
+    [data-testid="stExpander"] summary:hover,
+    details summary:hover {
+        color: var(--blue) !important;
     }
 </style>
 """
@@ -415,12 +574,6 @@ with st.sidebar:
     st.write(f"**Test instances:** {metadata['test_instances']}")
     st.write(f"**Features:** {metadata['feature_count']}")
     st.write("**Positive class:** Malignant (1)")
-    st.divider()
-    st.markdown(
-        "<div class='medical-note'><strong>Educational demonstration only.</strong><br>"
-        "Predictions from this app must not be used for medical diagnosis or treatment.</div>",
-        unsafe_allow_html=True,
-    )
 
 summary_columns = st.columns(4)
 summary_columns[0].markdown(
@@ -440,8 +593,8 @@ summary_columns[3].markdown(
     unsafe_allow_html=True,
 )
 
-upload_tab, overview_tab, guide_tab = st.tabs(
-    ["Upload & Evaluate", "Model Comparison", "CSV Guide"]
+upload_tab, overview_tab = st.tabs(
+    ["Upload & Evaluate", "Model Comparison"]
 )
 
 with overview_tab:
@@ -491,11 +644,33 @@ with overview_tab:
 with upload_tab:
     st.subheader("Upload CSV and Evaluate Model")
 
-    selected_model_name = st.selectbox(
-        "Select classification model",
-        options=list(models.keys()),
-        index=list(models.keys()).index(metadata["winner"]),
+    # Assignment-prescribed order
+    MODEL_ORDER = [
+        "Logistic Regression",
+        "Decision Tree",
+        "kNN",
+        "Naive Bayes",
+        "Random Forest (Ensemble)",
+    ]
+    MODEL_LABELS = {
+        "Logistic Regression": "Logistic Regression",
+        "Decision Tree": "Decision Tree Classifier",
+        "kNN": "K-Nearest Neighbor Classifier",
+        "Naive Bayes": "Naive Bayes Classifier",
+        "Random Forest (Ensemble)": "Ensemble Model - Random Forest",
+    }
+
+    st.markdown("#### Select classification model(s)")
+    selected_model_names = st.pills(
+        "Model",
+        options=MODEL_ORDER,
+        format_func=lambda x: MODEL_LABELS[x],
+        default=MODEL_ORDER,
+        selection_mode="multi",
+        label_visibility="collapsed",
     )
+    if not selected_model_names:
+        selected_model_names = MODEL_ORDER
 
     st.markdown("#### Upload test data (CSV)")
     st.markdown(
@@ -507,7 +682,7 @@ with upload_tab:
     uploaded_file = st.file_uploader(
         "Choose a CSV file",
         type=["csv"],
-        help="The required feature names and order are shown in the CSV Guide tab.",
+        help="The file must contain all 30 numeric feature columns. Include the diagnosis column (0/1) to see evaluation metrics.",
     )
 
     use_supplied = st.checkbox(
@@ -540,119 +715,108 @@ with upload_tab:
                     "The following extra columns were ignored: " + ", ".join(extra_columns)
                 )
 
-            selected_model = models[selected_model_name]
-            predictions = selected_model.predict(features).astype(int)
-            probabilities = selected_model.predict_proba(features)[:, 1]
-            results = prediction_table(
-                input_frame, predictions, probabilities, labels
-            )
+            for selected_model_name in selected_model_names:
+                st.divider()
+                st.markdown(f"### {selected_model_name}")
 
-            st.success(
-                f"{selected_model_name} processed {len(features):,} rows successfully."
-            )
-
-            if labels is not None:
-                st.markdown("#### Assignment evaluation metrics")
-                current_metrics = compute_metrics(labels, predictions, probabilities)
-                render_metric_cards(current_metrics)
-
-                st.markdown("#### Diagnostic views")
-                confusion_column, roc_column = st.columns(2)
-                with confusion_column:
-                    render_confusion_matrix(labels, predictions, selected_model_name)
-                with roc_column:
-                    render_roc_curve(labels, probabilities, selected_model_name)
-
-                st.markdown("#### Classification report")
-                render_classification_report(labels, predictions)
-
-                with st.expander("Compare all five models on this uploaded labelled dataset"):
-                    all_model_results = evaluate_all_models(models, features, labels)
-                    display_all = all_model_results.copy()
-                    for metric in METRIC_COLUMNS:
-                        display_all[metric] = display_all[metric].round(4)
-                    st.dataframe(display_all, use_container_width=True, hide_index=True)
-            else:
-                st.info(
-                    "No diagnosis column was supplied, so evaluation metrics cannot be calculated. "
-                    "Predictions and probabilities are shown below."
+                selected_model = models[selected_model_name]
+                predictions = selected_model.predict(features).astype(int)
+                probabilities = selected_model.predict_proba(features)[:, 1]
+                results = prediction_table(
+                    input_frame, predictions, probabilities, labels
                 )
 
-            st.markdown("#### Prediction results")
-            compact_columns = [
-                column
-                for column in [
-                    TARGET_COLUMN,
-                    "predicted_diagnosis",
-                    "predicted_label",
-                    "benign_probability",
-                    "malignant_probability",
-                    "correct_prediction",
+                st.success(
+                    f"{selected_model_name} processed {len(features):,} rows successfully."
+                )
+
+                if labels is not None:
+                    st.markdown("#### Evaluation metrics")
+                    current_metrics = compute_metrics(labels, predictions, probabilities)
+                    render_metric_cards(current_metrics)
+
+                    st.markdown("#### Diagnostic views")
+                    confusion_column, roc_column = st.columns(2)
+                    with confusion_column:
+                        render_confusion_matrix(labels, predictions, selected_model_name)
+                    with roc_column:
+                        render_roc_curve(labels, probabilities, selected_model_name)
+
+                    st.markdown("#### Classification report")
+                    render_classification_report(labels, predictions)
+                else:
+                    st.info(
+                        "No diagnosis column was supplied, so evaluation metrics cannot be calculated. "
+                        "Predictions and probabilities are shown below."
+                    )
+
+                st.markdown("#### Prediction results")
+                compact_columns = [
+                    column
+                    for column in [
+                        TARGET_COLUMN,
+                        "predicted_diagnosis",
+                        "predicted_label",
+                        "benign_probability",
+                        "malignant_probability",
+                        "correct_prediction",
+                    ]
+                    if column in results.columns
                 ]
-                if column in results.columns
-            ]
-            st.dataframe(
-                results[compact_columns].style.format(
-                    {
-                        "benign_probability": "{:.4f}",
-                        "malignant_probability": "{:.4f}",
-                    }
-                ),
-                use_container_width=True,
-                hide_index=True,
-            )
-            st.download_button(
-                "Download prediction results",
-                data=results.to_csv(index=False).encode("utf-8"),
-                file_name=f"{selected_model_name.lower().replace(' ', '_')}_predictions.csv",
-                mime="text/csv",
-            )
+                st.dataframe(
+                    results[compact_columns].style.format(
+                        {
+                            "benign_probability": "{:.4f}",
+                            "malignant_probability": "{:.4f}",
+                        }
+                    ),
+                    use_container_width=True,
+                    hide_index=True,
+                )
+                st.download_button(
+                    f"Download {selected_model_name} predictions",
+                    data=results.to_csv(index=False).encode("utf-8"),
+                    file_name=f"{selected_model_name.lower().replace(' ', '_')}_predictions.csv",
+                    mime="text/csv",
+                    key=f"download_{selected_model_name}",
+                )
 
         except Exception as error:
             st.error(f"CSV validation or prediction failed: {error}")
 
-with guide_tab:
-    st.subheader("CSV schema and class convention")
-    st.write(
-        "The app expects the 30 numeric feature columns below. A labelled test file may also "
-        "include `diagnosis`, where 0 means Benign and 1 means Malignant."
-    )
+        # ── Model comparison for selected models ──────────────────────────
+        if labels is not None and len(selected_model_names) > 1:
+            st.divider()
+            st.markdown("### Model Comparison (selected models)")
+            comparison_rows = []
+            for name in selected_model_names:
+                preds = models[name].predict(features).astype(int)
+                probs = models[name].predict_proba(features)[:, 1]
+                row = {"ML Model Name": MODEL_LABELS.get(name, name)}
+                row.update(compute_metrics(labels, preds, probs))
+                comparison_rows.append(row)
+            comp_df = pd.DataFrame(comparison_rows)[["ML Model Name", *METRIC_COLUMNS]]
+            for m in METRIC_COLUMNS:
+                comp_df[m] = comp_df[m].round(4)
+            st.dataframe(comp_df, use_container_width=True, hide_index=True)
+            st.bar_chart(comp_df.set_index("ML Model Name")[METRIC_COLUMNS], height=380)
 
-    feature_table = pd.DataFrame(
-        {
-            "Position": range(1, len(feature_names) + 1),
-            "Required feature column": feature_names,
-            "Data type": ["Numeric"] * len(feature_names),
-        }
-    )
-    st.dataframe(feature_table, use_container_width=True, hide_index=True)
+            # Dynamic winner from selected models
+            winner_row = comp_df.sort_values(
+                by=["MCC", "F1", "AUC", "Accuracy"], ascending=False
+            ).iloc[0]
+            st.markdown(
+                f"""
+                <div class="winner-card">
+                    <strong>Winner among selected models: {winner_row['ML Model Name']}</strong><br>
+                    Selected using highest MCC, then F1, AUC, and Accuracy as tie-breakers.
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
 
-    sample_bytes = (PROJECT_ROOT / "sample_upload_without_target.csv").read_bytes()
-    st.download_button(
-        "Download feature-only sample CSV",
-        data=sample_bytes,
-        file_name="sample_upload_without_target.csv",
-        mime="text/csv",
-    )
 
-    st.markdown("#### Implemented models")
-    for model_name in models:
-        st.markdown(f"<span class='pill'>{model_name}</span>", unsafe_allow_html=True)
 
-    st.markdown("#### Required evaluation metrics")
-    for metric_name in METRIC_COLUMNS:
-        st.markdown(f"<span class='pill'>{metric_name}</span>", unsafe_allow_html=True)
-
-st.divider()
-st.markdown(
-    f"""
-    <div class="winner-card">
-        <strong>Overall winner on the supplied test data: {metadata['winner']}</strong><br>
-        Selected using {metadata['winner_selection_rule'].lower()}.
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
 st.markdown(
     "<p class='small-muted'>Dataset: UCI Breast Cancer Wisconsin (Diagnostic), loaded through "
     "scikit-learn. Target convention used by this project: 1 = Malignant, 0 = Benign.</p>",
