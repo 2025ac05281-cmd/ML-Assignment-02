@@ -39,7 +39,7 @@ CLASS_LABELS = {0: "Benign", 1: "Malignant"}
 METRIC_COLUMNS = ["Accuracy", "AUC", "Precision", "Recall", "F1", "MCC"]
 
 st.set_page_config(
-    page_title="ML Assignment 2 - Breast Cancer Classification",
+    page_title="ML Classification Model Evaluator",
     page_icon="📊",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -551,11 +551,11 @@ st.markdown(
     """
     <section class="hero">
         <div class="hero-kicker">BITS WILP · Machine Learning · Assignment 2</div>
-        <h1>Breast Cancer Classification</h1>
+        <h1>ML Classification Model Evaluator</h1>
         <p>
-            Compare five classification algorithms and test them on Breast Cancer
-            Wisconsin diagnostic records. Upload a labelled CSV to reproduce all
-            required metrics, or upload feature-only data to generate predictions.
+            Select and compare five classification models on your dataset.
+            Upload a labelled CSV to evaluate Accuracy, AUC, Precision, Recall, F1 and MCC,
+            or upload feature-only data to generate predictions.
         </p>
     </section>
     """,
@@ -599,7 +599,7 @@ upload_tab, overview_tab = st.tabs(
 )
 
 with overview_tab:
-    st.subheader("Saved experiment results")
+    st.subheader("All Models Used and Evaluation Results")
     st.caption(
         "These values were produced from the 114-row supplied test_data.csv. "
         "All rows were excluded from model training."
@@ -641,6 +641,21 @@ with overview_tab:
             f"<div class='info-card'><strong>{model_name}</strong><br>{observation}</div><br>",
             unsafe_allow_html=True,
         )
+
+    # Winner card based on full comparison
+    winner_full = comparison.sort_values(
+        by=["MCC", "F1", "AUC", "Accuracy"], ascending=False
+    ).iloc[0]["ML Model Name"]
+    st.divider()
+    st.markdown(
+        f"""
+        <div class="winner-card">
+            <strong>Overall Best Performing Model: {winner_full}</strong><br>
+            Selected using highest MCC, then F1, AUC, and Accuracy as tie-breakers.
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 with upload_tab:
     st.subheader("Upload CSV and Evaluate Model")
