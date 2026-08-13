@@ -39,8 +39,8 @@ CLASS_LABELS = {0: "Benign", 1: "Malignant"}
 METRIC_COLUMNS = ["Accuracy", "AUC", "Precision", "Recall", "F1", "MCC"]
 
 st.set_page_config(
-    page_title="Diagnostic ML Model Studio",
-    page_icon="🧬",
+    page_title="ML Assignment 2 - Breast Cancer Classification",
+    page_icon="📊",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -390,8 +390,8 @@ comparison = load_comparison_table()
 st.markdown(
     """
     <section class="hero">
-        <div class="hero-kicker">BITS WILP · Machine Learning Assignment 2</div>
-        <h1>Diagnostic ML Model Studio</h1>
+        <div class="hero-kicker">BITS WILP · Machine Learning · Assignment 2</div>
+        <h1>Breast Cancer Classification</h1>
         <p>
             Compare five classification algorithms and test them on Breast Cancer
             Wisconsin diagnostic records. Upload a labelled CSV to reproduce all
