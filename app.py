@@ -375,6 +375,14 @@ def evaluate_all_models(
     return pd.DataFrame(rows)[["ML Model Name", *METRIC_COLUMNS]]
 
 
+# Auto-generate artifacts if they are missing (e.g. fresh clone without results/).
+if not (RESULTS_DIR / "model_comparison.csv").exists() or not (MODEL_DIR / "feature_names.json").exists():
+    import sys as _sys
+    _sys.path.insert(0, str(PROJECT_ROOT))
+    from model.train_models import ProjectPaths as _ProjectPaths, train_and_evaluate as _train_and_evaluate  # noqa: E402
+    with st.spinner("First run: training models and generating artifacts — this takes about 30 seconds…"):
+        _train_and_evaluate(_ProjectPaths.from_root(PROJECT_ROOT))
+
 models, metadata = load_models()
 feature_names = load_json(MODEL_DIR / "feature_names.json")
 comparison = load_comparison_table()
