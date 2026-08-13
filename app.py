@@ -440,18 +440,8 @@ summary_columns[3].markdown(
     unsafe_allow_html=True,
 )
 
-st.markdown(
-    f"""
-    <div class="winner-card">
-        <strong>Overall winner on the supplied test data: {metadata['winner']}</strong><br>
-        Selected using {metadata['winner_selection_rule'].lower()}.
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
-
-overview_tab, upload_tab, guide_tab = st.tabs(
-    ["Model Comparison", "Upload Test Data", "CSV Guide"]
+upload_tab, overview_tab, guide_tab = st.tabs(
+    ["Upload & Evaluate", "Model Comparison", "CSV Guide"]
 )
 
 with overview_tab:
@@ -499,38 +489,34 @@ with overview_tab:
         )
 
 with upload_tab:
-    st.subheader("Evaluate a model on CSV data")
-    st.markdown(
-        "<div class='upload-note'>Upload only test data. Include the <code>diagnosis</code> "
-        "column to calculate Accuracy, AUC, Precision, Recall, F1 and MCC. Omit it for "
-        "prediction-only use.</div>",
-        unsafe_allow_html=True,
+    st.subheader("Upload CSV and Evaluate Model")
+
+    selected_model_name = st.selectbox(
+        "Select classification model",
+        options=list(models.keys()),
+        index=list(models.keys()).index(metadata["winner"]),
     )
 
-    control_left, control_right = st.columns([1.35, 1])
-    with control_left:
-        selected_model_name = st.selectbox(
-            "Select classification model",
-            options=list(models.keys()),
-            index=list(models.keys()).index(metadata["winner"]),
-        )
-    with control_right:
-        data_source = st.radio(
-            "Data source",
-            options=["Upload CSV", "Use supplied test_data.csv"],
-            horizontal=True,
-        )
+    st.markdown("#### Upload test data (CSV)")
+    st.markdown(
+        "<div class='upload-note'>Upload a CSV with all 30 feature columns. "
+        "Include the <code>diagnosis</code> column (0=Benign, 1=Malignant) to see "
+        "Accuracy, AUC, Precision, Recall, F1 and MCC. Omit it for prediction-only use.</div>",
+        unsafe_allow_html=True,
+    )
+    uploaded_file = st.file_uploader(
+        "Choose a CSV file",
+        type=["csv"],
+        help="The required feature names and order are shown in the CSV Guide tab.",
+    )
 
-    uploaded_file = None
-    if data_source == "Upload CSV":
-        uploaded_file = st.file_uploader(
-            "Choose a CSV file",
-            type=["csv"],
-            help="The required feature names and order are shown in the CSV Guide tab.",
-        )
+    use_supplied = st.checkbox(
+        "Or use the included test_data.csv (114 labelled rows)",
+        value=False,
+    )
 
     input_frame: pd.DataFrame | None = None
-    if data_source == "Use supplied test_data.csv":
+    if use_supplied:
         input_frame = pd.read_csv(DEFAULT_TEST_DATA)
     elif uploaded_file is not None:
         try:
@@ -539,7 +525,7 @@ with upload_tab:
             st.error(f"The CSV could not be read: {error}")
 
     if input_frame is None:
-        st.info("Choose the supplied test file or upload a CSV to begin.")
+        st.info("Upload a CSV file above, or tick the checkbox to use the supplied test data.")
     else:
         st.markdown("#### Input preview")
         st.caption(f"Rows: {len(input_frame):,} · Columns: {len(input_frame.columns):,}")
@@ -657,6 +643,16 @@ with guide_tab:
     for metric_name in METRIC_COLUMNS:
         st.markdown(f"<span class='pill'>{metric_name}</span>", unsafe_allow_html=True)
 
+st.divider()
+st.markdown(
+    f"""
+    <div class="winner-card">
+        <strong>Overall winner on the supplied test data: {metadata['winner']}</strong><br>
+        Selected using {metadata['winner_selection_rule'].lower()}.
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
 st.markdown(
     "<p class='small-muted'>Dataset: UCI Breast Cancer Wisconsin (Diagnostic), loaded through "
     "scikit-learn. Target convention used by this project: 1 = Malignant, 0 = Benign.</p>",
